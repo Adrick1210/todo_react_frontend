@@ -7,11 +7,11 @@ import App from "./App";
 import Index from "./pages/index";
 
 const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route path="/" element={<App />}>
-
-        </Route>
-    )
-)
+  createRoutesFromElements(
+    <Route path="/" element={<App />}>
+      <Route path="" element={<Index />} />
+    </Route>
+  )
+);
 
 export default router;

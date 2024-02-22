@@ -5,3 +5,9 @@
 ## Dependencies Used
 
 - react-router-dom
+
+## Wire-frame Architecture 
+![wireframe](./images/wire.png)
+
+## Mobile layout
+![Mobile](./images/mobile.png)
