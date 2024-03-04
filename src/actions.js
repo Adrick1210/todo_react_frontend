@@ -19,3 +19,28 @@ export const createAction = async ({ request }) => {
   });
   return redirect("/");
 };
+
+export const updateAction = async ({ request, params }) => {
+  const formData = await request.formData();
+
+  const updatedTodo = {
+    title: formData.get("title"),
+    isComplete: formData.get("isComplete"),
+  };
+
+  await fetch(`${URL}/todos/${params.id}`, {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedTodo),
+  });
+  return redirect("/");
+};
+
+export const deleteAction = async ({ params }) => {
+  await fetch(`${URL}/todos/${params.id}`, {
+    method: "delete",
+  })
+  return redirect("/");
+}

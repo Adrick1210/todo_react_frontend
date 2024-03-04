@@ -5,3 +5,9 @@ export const todosLoader = async () => {
     const todos = await res.json();
     return todos;
 }
+
+export const todoLoader = async ({params}) => {
+    const res = await fetch(`${URL}/todos/${params.id}`);
+    const todo = await res.json();
+    return todo;
+}
