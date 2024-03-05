@@ -11,16 +11,19 @@ export const createAction = async ({ request }) => {
   };
   console.log(createdTodo);
   await fetch(`${URL}/todos`, {
-    method: "post",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
+
+      Authorization: `Bearer ${localStorage.getItem('token')}`
     },
     body: JSON.stringify(createdTodo),
   });
-  return redirect("/");
+  return redirect("/dashboard");
 };
 
 export const updateAction = async ({ request, params }) => {
+  const id = params.id;
   const formData = await request.formData();
 
   const updatedTodo = {
@@ -29,18 +32,72 @@ export const updateAction = async ({ request, params }) => {
   };
 
   await fetch(`${URL}/todos/${params.id}`, {
-    method: "put",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
+
+      Authorization: `Bearer ${localStorage.getItem('token')}`
     },
     body: JSON.stringify(updatedTodo),
   });
-  return redirect("/");
+  return redirect(`/${id}`);
 };
 
 export const deleteAction = async ({ params }) => {
   await fetch(`${URL}/todos/${params.id}`, {
-    method: "delete",
-  })
-  return redirect("/");
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  return redirect("/dashboard");
+};
+
+export const signupAction = async ({ request }) => {
+  const formData = await request.formData();
+
+  const newUser = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+  };
+
+  const response = await fetch(`${URL}/signup`, {
+    method: "POST",
+    body: JSON.stringify(newUser),
+    headers: {
+      "Content-Type": "application/json"
+    },
+  });
+  if(response.status >= 400) {
+    alert(response.statusText);
+    return redirect("/signup");
+  }
+  return redirect("/login");
+}
+
+export const loginAction = async ({ request }) => {
+  const formData = await request.formData();
+
+  const newUser = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+  };
+
+  const response = await fetch(`${URL}/login`, {
+    method: "POST",
+    body: JSON.stringify(newUser),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if(response.status >= 400) {
+    alert(response.statusText);
+    return redirect("/signup");
+  }
+  const data = await response.json();
+  console.log(data);
+  localStorage.setItem("token", data.token);
+
+  return redirect("/dashboard");
 }

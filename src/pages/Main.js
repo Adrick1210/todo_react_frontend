@@ -11,7 +11,7 @@ function Main() {
 
       <h3>Already have a account?</h3>
       <Link to="/login">
-      Login
+        login
       </Link>
       <Outlet />
     </div>

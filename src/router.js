@@ -10,17 +10,20 @@ import Main from "./pages/Main";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { todosLoader, todoLoader } from "./loader";
-import { createAction, updateAction, deleteAction } from "./actions";
+import { createAction, updateAction, deleteAction, signupAction, loginAction } from "./actions";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="" element={<Main />}>
-        <Route path="signup" element={<Signup />} />
-        <Route path="Login" element={<Login />}/>
+
+        <Route path="signup" element={<Signup />} action={signupAction}/>
+
+        <Route path="login" element={<Login />} action={loginAction}/>
+        
       </Route>
 
-      <Route path="/dashboard" element={<Index />} loader={todosLoader} />
+      <Route path="dashboard" element={<Index />} loader={todosLoader} />
 
       <Route path=":id" element={<Show />} loader={todoLoader} />
 
