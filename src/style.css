@@ -1,12 +1,12 @@
 /* container */
-.list-container{
+/* .list-container{
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
+} */
 
 /* card */
-.todo {
+/* .todo {
     border: 1px solid black;
     display: flex;
 }
@@ -24,4 +24,4 @@
 .checkbox input{
     height: 35px;
     width: 35px;
-}
+} */
