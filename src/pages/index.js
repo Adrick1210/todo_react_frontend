@@ -18,6 +18,7 @@ function Index() {
   };
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editModalTodoId, setEditModalTodoId] = useState(null);
 
   const handleOpenAddModal = () => {
     setIsAddModalOpen(true);
@@ -27,15 +28,13 @@ function Index() {
     setIsAddModalOpen(false);
   };
 
-  // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const handleOpenEditModal = (todoId) => {
+    setEditModalTodoId(todoId);
+  };
 
-  // const handleOpenEditModal = () => {
-  //   setIsEditModalOpen(true);
-  // };
-
-  // const handleCloseEditModal = () => {
-  //   setIsEditModalOpen(false);
-  // };
+  const handleCloseEditModal = () => {
+    setEditModalTodoId(null);
+  };
 
   return (
     <div>
@@ -56,36 +55,34 @@ function Index() {
       </nav>
 
       <div className="list-container">
-        {todos.map((todo) => {
-          return (
-            <div className="todo" key={todo._id}>
-              <Link to={todo._id}>
-                <h1>{todo.title}</h1>
-              </Link>
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  name="isComplete"
-                  checked={todo.isComplete}
-                  onChange={() => handleCheckboxChange(todo)}
-                />
-              </div>
-              {/* <button onClick={handleOpenEditModal}>Edit</button>
-
-              {isEditModalOpen && (
-                <Modal>
-                  <Form action="/create" method="post">
-                    <h2>Edit {todo.title}</h2>
-                    <input type="text" name="title" value={todo.title} />
-                    <input type="checkbox" name="isComplete" />
-                    <input type="submit" value={`Edit ${todo.title}`} />
-                    <button onClick={handleCloseEditModal}>Close</button>
-                  </Form>
-                </Modal>
-              )} */}
+        {todos.map((todo) => (
+          <div className="todo" key={todo._id}>
+            <Link to={todo._id}>
+              <h1>{todo.title}</h1>
+            </Link>
+            <div className="checkbox">
+              <input
+                type="checkbox"
+                name="isComplete"
+                checked={todo.isComplete}
+                onChange={() => handleCheckboxChange(todo)}
+              />
             </div>
-          );
-        })}
+            <button onClick={() => handleOpenEditModal(todo._id)}>Edit</button>
+          </div>
+        ))}
+
+        {editModalTodoId && (
+          <Modal className={editModalTodoId}>
+            <Form action="/create" method="post">
+              <h2>Edit {todos.title}</h2>
+              <input type="text" name="title" value={todos.title} />
+              <input type="checkbox" name="isComplete" />
+              <input type="submit" value="Save" />
+              <button onClick={handleCloseEditModal}>Close</button>
+            </Form>
+          </Modal>
+        )}
       </div>
     </div>
   );
