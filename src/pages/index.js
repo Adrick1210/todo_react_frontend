@@ -1,7 +1,19 @@
-import { useLoaderData, Form, Link } from "react-router-dom";
+import { useContext } from "react";
+import { Form, Link } from "react-router-dom";
+import { TodoContext } from "../contexts/TodoContext";
+import { updateBoxToggle } from "../actions";
+import '../style.css'
 
 function Index() {
-  const todos = useLoaderData();
+  const { todos, updateTodo } = useContext(TodoContext);
+
+  const handleCheckboxChange = async (todo) => {
+    const updatedTodo = await updateBoxToggle({
+      ...todo,
+      isComplete: !todo.isComplete,
+    });
+    updateTodo(updatedTodo);
+  };
 
   return (
     <div>
@@ -17,10 +29,18 @@ function Index() {
       <div className="list-container">
         {todos.map((todo) => {
           return (
-            <div className="todo-item" key={todo._id}>
+            <div className="todo" key={todo._id}>
               <Link to={todo._id}>
-              <h1>{todo.title}</h1>
+                <h1>{todo.title}</h1>
               </Link>
+              <div className="checkbox">
+                <input
+                  type="checkbox"
+                  name="isComplete"
+                  checked={todo.isComplete}
+                  onChange={() => handleCheckboxChange(todo)}
+                />
+              </div>
             </div>
           );
         })}

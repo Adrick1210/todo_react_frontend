@@ -1,0 +1,27 @@
+/* container */
+.list-container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* card */
+.todo {
+    border: 1px solid black;
+    display: flex;
+}
+
+.todo h1{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.checkbox {
+    border: 1px solid black;
+    margin: auto;
+}
+
+.checkbox input{
+    height: 35px;
+    width: 35px;
+}

@@ -15,7 +15,7 @@ export const createAction = async ({ request }) => {
     headers: {
       "Content-Type": "application/json",
 
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(createdTodo),
   });
@@ -36,19 +36,39 @@ export const updateAction = async ({ request, params }) => {
     headers: {
       "Content-Type": "application/json",
 
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(updatedTodo),
   });
   return redirect(`/${id}`);
 };
 
+export const updateBoxToggle = async (todo) => {
+  const id = todo._id;
+
+  const updatedTodo = {
+    title: todo.title,
+    isComplete: todo.isComplete,
+  };
+
+  const response = await fetch(`${URL}/todos/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(updatedTodo),
+  });
+  return response.json();
+};
+
 export const deleteAction = async ({ params }) => {
   await fetch(`${URL}/todos/${params.id}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
   return redirect("/dashboard");
 };
@@ -65,15 +85,15 @@ export const signupAction = async ({ request }) => {
     method: "POST",
     body: JSON.stringify(newUser),
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
   });
-  if(response.status >= 400) {
+  if (response.status >= 400) {
     alert(response.statusText);
     return redirect("/signup");
   }
   return redirect("/login");
-}
+};
 
 export const loginAction = async ({ request }) => {
   const formData = await request.formData();
@@ -91,7 +111,7 @@ export const loginAction = async ({ request }) => {
     },
   });
 
-  if(response.status >= 400) {
+  if (response.status >= 400) {
     alert(response.statusText);
     return redirect("/signup");
   }
@@ -100,4 +120,4 @@ export const loginAction = async ({ request }) => {
   localStorage.setItem("token", data.token);
 
   return redirect("/dashboard");
-}
+};
