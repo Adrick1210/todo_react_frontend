@@ -27,15 +27,15 @@ function Index() {
     setIsAddModalOpen(false);
   };
 
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const handleOpenEditModal = () => {
-    setIsEditModalOpen(true);
-  };
+  // const handleOpenEditModal = () => {
+  //   setIsEditModalOpen(true);
+  // };
 
-  const handleCloseEditModal = () => {
-    setIsEditModalOpen(false);
-  };
+  // const handleCloseEditModal = () => {
+  //   setIsEditModalOpen(false);
+  // };
 
   return (
     <div>
